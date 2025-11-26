@@ -1,0 +1,15 @@
+streamlit
+pillow
+numpy
+pandas
+openpyxl
+scikit-image
+opencv-python-headless
+rembg==2.0.54
+onnxruntime==1.17.1
+torch==2.2.2
+torchvision==0.17.2
+easyocr
+pytesseract
+matplotlib
+scipy
