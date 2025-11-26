@@ -5,6 +5,9 @@ import pandas as pd
 import io
 import matplotlib.pyplot as plt
 
+# --- Set page config at the very top ---
+st.set_page_config(page_title="📄 Bank Statement Analysis", layout="wide")
+
 def load_statement(uploaded_file):
     """Load the bank statement (CSV or Excel) into a DataFrame."""
     try:
@@ -59,7 +62,6 @@ def plot_transactions(df):
     st.pyplot(fig)
 
 def run_statement_analysis_app():
-    st.set_page_config(page_title="📄 Bank Statement Analysis", layout="wide")
     st.title("📄 Bank Statement Analysis Tool")
 
     uploaded_file = st.file_uploader("Upload bank statement (CSV or Excel)", type=["csv","xlsx","xls"])
@@ -81,3 +83,4 @@ def run_statement_analysis_app():
 
             st.write("### Transaction Type Distribution")
             st.bar_chart(df_clean['Type'].value_counts())
+
