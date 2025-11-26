@@ -1,15 +1,22 @@
-streamlit
-pillow
-numpy
-pandas
-openpyxl
-scikit-image
-opencv-python-headless
-rembg==2.0.54
-onnxruntime==1.17.1
+# Core
+streamlit==1.25.0
+numpy==1.26.0
+pandas==2.1.1
+matplotlib==3.8.0
+scipy==1.11.0
+openpyxl==3.1.2
+pillow==10.0.0
+opencv-python-headless==4.8.1.78
+scikit-image==0.23.5
+
+# PyTorch & Style Transfer
 torch==2.2.2
 torchvision==0.17.2
-easyocr
-pytesseract
-matplotlib
-scipy
+
+# Background remover
+rembg==2.0.54
+onnxruntime==1.17.1
+
+# OCR
+easyocr==1.6.2
+pytesseract==0.5.3
