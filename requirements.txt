@@ -13,3 +13,4 @@ rembg==2.0.54
 onnxruntime==1.17.1
 easyocr==1.7.0
 pytesseract==0.3.10
+plotly==5.18.0
