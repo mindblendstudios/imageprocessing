@@ -1,12 +1,12 @@
 import streamlit as st
-from imageprocessing.imageprocessing import run_imageprocessing
-from imageprocessing.bgremover import run_bgremover
-from imageprocessing.image_identifier2 import run_image_identifier
-from imageprocessing.imageoperations import run_imageoperations
-from imageprocessing.ocrtextextraction import run_ocr
-from imageprocessing.dashboard import run_excel_dashboard
-from imageprocessing.styleimage import run_style_transfer
-from imageprocessing.bankstatementanalysis import run_statement_analysis_app
+from imageprocessing import run_imageprocessing
+from bgremover import run_bgremover
+from image_identifier2 import run_image_identifier
+from imageoperations import run_imageoperations
+from ocrtextextraction import run_ocr
+from dashboard import run_excel_dashboard
+from styleimage import run_style_transfer
+from bankstatementanalysis import run_statement_analysis_app
 
 st.set_page_config(page_title="My Image Processing Website", layout="wide")
 
@@ -83,5 +83,6 @@ elif tool == "Style Image":
 elif tool == "Bank Statement Analysis":
     st.header("Bank Statement Analysis")
     run_statement_analysis_app()
+
 
 
