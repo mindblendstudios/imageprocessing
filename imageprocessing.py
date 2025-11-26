@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image, ImageFilter
 import numpy as np
-from skimage import color, filters
+from scikit-image import color, filters
 import io
 
 def run_imageprocessing():
@@ -67,3 +67,4 @@ def run_imageprocessing():
             file_name=f"{filter_option.lower().replace(' ', '_')}.png",
             mime="image/png"
         )
+
