@@ -41,7 +41,7 @@ st.markdown(
 )
 
 # --- Add Logo (top of the page) ---
-st.image("C:/Management/Python/imagereader/iplogo.jpg", width=70)
+st.image("iplogo.jpg", width=70)
 
 st.title("My Image Processor")
 
@@ -83,3 +83,4 @@ elif tool == "Style Image":
 elif tool == "Bank Statement Analysis":
     st.header("Bank Statement Analysis")
     run_statement_analysis_app()
+
