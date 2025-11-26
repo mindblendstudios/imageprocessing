@@ -11,7 +11,7 @@ pillow==9.5.0
 opencv-python-headless==4.8.1.78
 scikit-image==0.22.0
 
-# PyTorch for style transfer
+# PyTorch
 torch==2.2.2
 torchvision==0.17.2
 
@@ -20,5 +20,5 @@ rembg==2.0.54
 onnxruntime==1.17.1
 
 # OCR packages
-easyocr==1.6.2
-pytesseract==0.5.3
+easyocr==1.7.0
+pytesseract==0.5.5
