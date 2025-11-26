@@ -7,9 +7,9 @@ pandas==2.1.1
 matplotlib==3.8.0
 scipy==1.11.0
 openpyxl==3.1.2
-pillow==10.0.0
+pillow==9.5.0
 opencv-python-headless==4.8.1.78
-scikit-image==0.23.5
+scikit-image==0.22.0
 
 # PyTorch for style transfer
 torch==2.2.2
