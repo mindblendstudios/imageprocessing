@@ -36,9 +36,11 @@ def run_imageprocessing():
 
         elif filter_option == "Sepia":
             sepia = img_array.astype(np.float64)
-            sepia = sepia @ [[0.393, 0.769, 0.189],
-                             [0.349, 0.686, 0.168],
-                             [0.272, 0.534, 0.131]]
+            sepia = sepia @ [
+                [0.393, 0.769, 0.189],
+                [0.349, 0.686, 0.168],
+                [0.272, 0.534, 0.131]
+            ]
             sepia = np.clip(sepia, 0, 255).astype(np.uint8)
             result_image = Image.fromarray(sepia)
 
@@ -52,12 +54,12 @@ def run_imageprocessing():
             result_image = Image.fromarray(edges_uint8)
             result_image = ensure_rgb(result_image)
 
-        # Display
+        # Display images (NO use_container_width)
         st.subheader("Original Image")
-        st.image(original_image, use_container_width=True)
+        st.image(original_image)
 
         st.subheader(f"{filter_option} Image")
-        st.image(result_image, use_container_width=True)
+        st.image(result_image)
 
         # Download result
         buf = io.BytesIO()
