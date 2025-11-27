@@ -20,24 +20,39 @@ def load_statement(uploaded_file):
         st.error(f"Error loading file: {e}")
         return None
 
+def detect_column(df, keywords):
+    """Detect the first column that matches one of the keywords (case-insensitive)."""
+    for col in df.columns:
+        for kw in keywords:
+            if kw.lower() in col.lower():
+                return col
+    return None
+
 def clean_transactions(df):
     """Standardize transaction data: Date, Description, Amount, Debit/Credit."""
-    # Example: assume there are columns Date, Description, Amount
     df = df.copy()
     df = df.rename(columns={col: col.strip() for col in df.columns})
-    # Ensure date column
-    if 'Date' in df.columns:
-        df['Date'] = pd.to_datetime(df['Date'])
+
+    # Detect Date column
+    date_col = detect_column(df, ['date', 'transaction date'])
+    if date_col:
+        df['Date'] = pd.to_datetime(df[date_col], errors='coerce')
     else:
-        st.warning("No 'Date' column found; results may be limited.")
-    # Ensure Amount column
-    if 'Amount' in df.columns:
-        df['Amount'] = pd.to_numeric(df['Amount'], errors='coerce')
+        st.warning("No date column found; results may be limited.")
+        df['Date'] = pd.NaT
+
+    # Detect Amount column
+    amount_col = detect_column(df, ['amount', 'amt', 'credit', 'debit'])
+    if amount_col:
+        df['Amount'] = pd.to_numeric(df[amount_col], errors='coerce')
     else:
-        st.warning("No 'Amount' column found; results may be limited.")
-    # Classify as Debit/Credit
+        st.error("No Amount column found in uploaded file.")
+        return pd.DataFrame()  # Return empty df to avoid further errors
+
+    # Classify Debit/Credit
     df['Type'] = df['Amount'].apply(lambda x: 'Credit' if x >= 0 else 'Debit')
-    return df.dropna(subset=['Date','Amount'])
+
+    return df.dropna(subset=['Date', 'Amount'])
 
 def compute_metrics(df):
     total_credit = df[df['Type']=='Credit']['Amount'].sum()
@@ -67,20 +82,23 @@ def run_statement_analysis_app():
     uploaded_file = st.file_uploader("Upload bank statement (CSV or Excel)", type=["csv","xlsx","xls"])
     if uploaded_file:
         df = load_statement(uploaded_file)
-        if df is not None:
+        if df is not None and not df.empty:
             st.write("### Raw Data Preview")
             st.dataframe(df.head())
 
             df_clean = clean_transactions(df)
+            if df_clean.empty:
+                st.error("Could not detect Amount column. Please check your file.")
+                return
+
             st.write("### Cleaned Data", df_clean.head())
 
             metrics = compute_metrics(df_clean)
             st.write("### Key Metrics")
-            for k,v in metrics.items():
+            for k, v in metrics.items():
                 st.write(f"**{k}:** {v:.2f}")
 
             plot_transactions(df_clean)
 
             st.write("### Transaction Type Distribution")
             st.bar_chart(df_clean['Type'].value_counts())
-
