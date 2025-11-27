@@ -4,8 +4,10 @@ import numpy as np
 import cv2
 import io
 
+# --- Set page config at the very top ---
+st.set_page_config(page_title="🛠️ Basic Image Operations", layout="centered")
+
 def run_imageoperations():
-    st.set_page_config(page_title="🛠️ Basic Image Operations", layout="centered")
     st.title("🛠️ Basic Image Processing in Python")
 
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
@@ -89,3 +91,4 @@ def run_imageoperations():
         pil_img.save(buf, format="PNG")
         byte_im = buf.getvalue()
         st.download_button("📥 Download Image", data=byte_im, file_name="processed_image.png", mime="image/png")
+
