@@ -9,6 +9,9 @@ import torch.optim as optim
 from torchvision import transforms, models
 import copy
 
+# --- Set page config at the very top ---
+st.set_page_config(page_title="🎨 Neural Style Transfer", layout="centered")
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 imsize = 512
@@ -144,7 +147,6 @@ def run_transfer(content_file, style_file, num_steps=300):
 
 # ✅ This function is called from app.py
 def run_style_transfer():
-    st.set_page_config(page_title="🎨 Neural Style Transfer", layout="centered")
     st.title("🎨 Neural Style Transfer - Upload Your Own Images")
 
     content_file = st.file_uploader("Upload Content Image", type=["jpg", "jpeg", "png"])
@@ -169,3 +171,4 @@ def run_style_transfer():
                 file_name="styled_image.png",
                 mime="image/png"
             )
+
