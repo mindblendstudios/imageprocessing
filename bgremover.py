@@ -10,17 +10,17 @@ def run_bgremover():
 
     if uploaded_file:
         input_image = Image.open(uploaded_file)
-        st.image(input_image, caption="Original Image", use_container_width=True)
+        st.image(input_image, caption="Original Image")
 
         # Remove background
         result = remove(input_image)
-        st.image(result, caption="Background Removed", use_container_width=True)
+        st.image(result, caption="Background Removed")
 
-        # Convert to bytes and create download button
+        # Convert to bytes for download
         buf = io.BytesIO()
         result.save(buf, format="PNG")
         byte_im = buf.getvalue()
-        
+
         st.download_button(
             label="📥 Download Image",
             data=byte_im,
