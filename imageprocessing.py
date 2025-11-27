@@ -4,35 +4,38 @@ import numpy as np
 from skimage import color, filters
 import io
 
+def ensure_rgb(img):
+    """Convert single-channel or grayscale images to RGB for Streamlit."""
+    if img.mode != "RGB":
+        return img.convert("RGB")
+    return img
+
 def run_imageprocessing():
     st.title("🎨 Photo Editor")
     st.write("Apply filters to your image and download the result.")
 
-    # Upload image
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
-    # Filter options
     filter_option = st.selectbox(
         "Choose a filter to apply:",
         ["Grayscale", "Sepia", "Blur", "Edge Detection (Sobel)"]
     )
 
     if uploaded_file:
-        # Load and convert to RGB to handle all formats
         original_image = Image.open(uploaded_file).convert("RGB")
         result_image = None
 
-        # Convert to NumPy array for some filters
         img_array = np.array(original_image)
 
-        # Apply selected filter
+        # Process filters
         if filter_option == "Grayscale":
             gray = color.rgb2gray(img_array)
             gray_uint8 = (gray * 255).astype(np.uint8)
             result_image = Image.fromarray(gray_uint8)
+            result_image = ensure_rgb(result_image)
 
         elif filter_option == "Sepia":
-            sepia = np.array(original_image).astype(np.float64)
+            sepia = img_array.astype(np.float64)
             sepia = sepia @ [[0.393, 0.769, 0.189],
                              [0.349, 0.686, 0.168],
                              [0.272, 0.534, 0.131]]
@@ -47,25 +50,23 @@ def run_imageprocessing():
             edges = filters.sobel(gray)
             edges_uint8 = (edges * 255).astype(np.uint8)
             result_image = Image.fromarray(edges_uint8)
+            result_image = ensure_rgb(result_image)
 
-        # Display images
+        # Display
         st.subheader("Original Image")
         st.image(original_image, use_container_width=True)
 
         st.subheader(f"{filter_option} Image")
         st.image(result_image, use_container_width=True)
 
-        # Convert result to bytes
+        # Download result
         buf = io.BytesIO()
         result_image.save(buf, format="PNG")
         byte_im = buf.getvalue()
 
-        # Download button
         st.download_button(
             label="📥 Download Edited Image",
             data=byte_im,
             file_name=f"{filter_option.lower().replace(' ', '_')}.png",
             mime="image/png"
         )
-
-
