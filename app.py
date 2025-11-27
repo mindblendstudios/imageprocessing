@@ -48,7 +48,7 @@ st.title("My Image Processor")
 # Sidebar menu
 tool = st.sidebar.selectbox(
     "Choose Options to Process Image:",
-    ("Bank Statement Analysis", "Style Image", "Dashboard", "Photo Editor", "Background Remover", "Image Identifier", "Image Operations", "OCR Text Extraction")
+    ("Bank Statement Analysis", "OCR Text Extraction", "Dashboard", "Photo Editor", "Image Operations", "Background Remover", "Image Identifier", "Style Image")
 )
 
 # Display content based on selection
@@ -83,6 +83,7 @@ elif tool == "Style Image":
 elif tool == "Bank Statement Analysis":
     st.header("Bank Statement Analysis")
     run_statement_analysis_app()
+
 
 
 
