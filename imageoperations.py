@@ -14,7 +14,7 @@ def run_imageoperations():
 
     if uploaded_file:
         pil_img = Image.open(uploaded_file).convert("RGB")
-        st.image(pil_img, caption="Original Image", use_container_width=True)
+        st.image(pil_img, caption="Original Image")
 
         st.subheader("Choose operations to apply:")
 
@@ -90,5 +90,9 @@ def run_imageoperations():
         buf = io.BytesIO()
         pil_img.save(buf, format="PNG")
         byte_im = buf.getvalue()
-        st.download_button("📥 Download Image", data=byte_im, file_name="processed_image.png", mime="image/png")
-
+        st.download_button(
+            "📥 Download Image",
+            data=byte_im,
+            file_name="processed_image.png",
+            mime="image/png"
+        )
