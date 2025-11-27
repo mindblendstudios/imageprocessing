@@ -5,8 +5,9 @@ from PIL import Image
 import requests
 
 def run_image_identifier():
-    # Load pre-trained model
-    model = models.resnet50(pretrained=True)
+
+    # Load pre-trained model (updated API)
+    model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
     model.eval()
 
     # Image preprocessing
@@ -34,7 +35,7 @@ def run_image_identifier():
 
     if uploaded_file:
         image = Image.open(uploaded_file).convert("RGB")
-        st.image(image, caption="Uploaded Image", use_container_width=True)
+        st.image(image, caption="Uploaded Image")   # <— removed use_container_width
 
         # Preprocess and predict
         img_t = preprocess(image)
